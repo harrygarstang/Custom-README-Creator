@@ -2,8 +2,8 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 
 const badges = {
-    "MIT": "https://img.shields.io/badge/License-MIT-yellow.svg",
-    "IBM": "https://img.shields.io/badge/License-IPL%201.0-blue.svg",
+    "MIT": "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)",
+    "IBM": "[![License: IPL 1.0](https://img.shields.io/badge/License-IPL_1.0-blue.svg)](https://opensource.org/licenses/IPL-1.0)",
 };
 
 
@@ -35,41 +35,41 @@ inquirer
     .then((data) => {
         const filename = `${data.projectTitle.toLowerCase().split(' ').join('')}.md`;
 
-        const markdownContent = ` 
+        const markdownContent = `# ${data.projectTitle}
 
-        ${data.projectTitle}
 
-        ## Description:
-        ${data.description}
+${badges[data.license]}
+## Description:
+${data.description}
         
-        ## Table of Contents:
-        * Description
-        * Installation
-        * Usage
-        * License
-        * Contributing
-        * Tests
-        * Questions
+ ## Table of Contents:
+ * Description
+ * Installation
+ * Usage
+ * License
+ * Contributing
+ * Tests
+ * Questions
         
-        ## Installation:
-        For this project to work please follow these instructions: 
-        -------
-        ${data.install}
-        -------
+## Installation:
+For this project to work please follow these instructions: 
+-------
+${data.install}
+-------
         
-        ## Usage:
+## Usage:
         
-        ## License:
+## License:
         
-        ${badges[data.license]}
+
         
-        This project is regulated by the ${data.license}.
+This project is regulated by the ${data.license}.
         
-        ## Contributing:
+## Contributing:
         
-        ## Tests:
+## Tests:
         
-        ## Questions:`;
+## Questions:`;
         fs.writeFile(filename, markdownContent, (err) =>
             err ? console.log(err) : console.log('Success!')
         );
