@@ -1,48 +1,67 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 
+const badges = {
+    "MIT": "https://img.shields.io/badge/License-MIT-yellow.svg",
+    "IBM": "https://img.shields.io/badge/License-IPL%201.0-blue.svg",
+};
+
+
+
 inquirer
-  .prompt([
-    {
-      type: 'input',
-      name: 'projectTitle',
-      message: 'What is the  name of your project?',
-    },
-    {
-      type: 'checkbox',
-      message: 'What languages do you know?',
-      name: 'stack',
-      choices: ['HTML', 'CSS', 'JavaScript', 'MySQL'],
-    },
-    {
-      type: 'list',
-      message: 'What is your preferred method of communication?',
-      name: 'contact',
-      choices: ['email', 'phone', 'telekinesis'],
-    },
-  ])
-  .then((data) => {
-    const filename = `${data.projectTitle.toLowerCase().split(' ').join('')}.md`;
+    .prompt([
+        {
+            type: 'input',
+            name: 'projectTitle',
+            message: 'What is the  name of your project?',
+        },
+        {
+            type: 'input',
+            message: 'Please provide a short description of your project',
+            name: 'description',
+        },
+        {
+            type: 'list',
+            message: 'What license will regulate your project?',
+            name: 'license',
+            choices: Object.keys(badges),
+        },
+    ])
+    .then((data) => {
+        const filename = `${data.projectTitle.toLowerCase().split(' ').join('')}.md`;
 
-    const markdownContent = `# ${data.projectTitle}
+        const markdownContent = `# ${data.projectTitle}
 
-Description: ${data.name}
+        ## Description:
+        ${data.description}
+        
+        ## Table of Contents:
+        * Description
+        * Installation
+        * Usage
+        * License
+        * Contributing
+        * Tests
+        * Questions
+        
+        ## Installation:
+        
+        ## Usage:
+        
+        ## License:
+        
+        ${badges[data.license]}
+        
+        This project is regulated by the ${data.license}.
+        
+        ## Contributing:
+        
+        ## Tests:
+        
+        ## Questions: ${data.contact}`;
+        fs.writeFile(filename, markdownContent, (err) =>
+            err ? console.log(err) : console.log('Success!')
+        );
+    });
 
-Table of Contents:
-${data.stack.map((language) => `* ${language}`).join('\n')}
-
-Installation:
-
-Usage:
-
-License:
-
-Contributing:
-
-Tests:
-
-Questions: ${data.contact}`;
-    fs.writeFile(filename, markdownContent, (err) =>
-      err ? console.log(err) : console.log('Success!')
-    );
-  });
+    //${data.stack.map((language) => `* ${language}`).join('\n')}
