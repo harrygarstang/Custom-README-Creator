@@ -21,6 +21,11 @@ inquirer
             name: 'description',
         },
         {
+            type: 'input',
+            message: 'Please tell the user about any installations they need to run for this project',
+            name: 'install',
+        },
+        {
             type: 'list',
             message: 'What license will regulate your project?',
             name: 'license',
@@ -30,7 +35,9 @@ inquirer
     .then((data) => {
         const filename = `${data.projectTitle.toLowerCase().split(' ').join('')}.md`;
 
-        const markdownContent = `# ${data.projectTitle}
+        const markdownContent = ` 
+
+        ${data.projectTitle}
 
         ## Description:
         ${data.description}
@@ -45,6 +52,10 @@ inquirer
         * Questions
         
         ## Installation:
+        For this project to work please follow these instructions: 
+        -------
+        ${data.install}
+        -------
         
         ## Usage:
         
@@ -58,7 +69,7 @@ inquirer
         
         ## Tests:
         
-        ## Questions: ${data.contact}`;
+        ## Questions:`;
         fs.writeFile(filename, markdownContent, (err) =>
             err ? console.log(err) : console.log('Success!')
         );
