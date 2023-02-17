@@ -1,4 +1,3 @@
-// Solution doing a madness above and beyong cool little tricks with inquirer
 const inquirer = require('inquirer');
 const fs = require('fs');
 
@@ -6,8 +5,8 @@ inquirer
   .prompt([
     {
       type: 'input',
-      name: 'name',
-      message: 'What is your name?',
+      name: 'projectTitle',
+      message: 'What is the  name of your project?',
     },
     {
       type: 'checkbox',
@@ -23,11 +22,27 @@ inquirer
     },
   ])
   .then((data) => {
-    const filename = `${data.name.toLowerCase().split(' ').join('')}.json`;
+    const filename = `${data.projectTitle.toLowerCase().split(' ').join('')}.md`;
 
-    fs.writeFile(filename, JSON.stringify(data, null, '\t'), (err) =>
+    const markdownContent = `# ${data.projectTitle}
+
+Description: ${data.name}
+
+Table of Contents:
+${data.stack.map((language) => `* ${language}`).join('\n')}
+
+Installation:
+
+Usage:
+
+License:
+
+Contributing:
+
+Tests:
+
+Questions: ${data.contact}`;
+    fs.writeFile(filename, markdownContent, (err) =>
       err ? console.log(err) : console.log('Success!')
     );
   });
-
-  
