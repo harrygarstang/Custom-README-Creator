@@ -1,6 +1,8 @@
+// Requiring inquirer and node.js filesystem
 const inquirer = require('inquirer');
 const fs = require('fs');
 
+// Badges object containing name of license and the link to its image 
 const badges = {
     "MIT": "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)",
     "IBM": "[![License: IPL 1.0](https://img.shields.io/badge/License-IPL_1.0-blue.svg)](https://opensource.org/licenses/IPL-1.0)",
@@ -10,7 +12,7 @@ const badges = {
     "Unlicense": "[![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](http://unlicense.org/)",
 };
 
-
+// Inquirer prompts for user 
 inquirer
     .prompt([
         {
@@ -44,7 +46,7 @@ inquirer
             message: 'What guidance do you want to provide regarding contribution to this project?',
             name: 'contribution',
             choices: [
-                'This project is not seeking contributors', 'This project welcomes contributors, please fork the repository and create pull requests','Please contact me directly via email to enquire about contributing',
+                'This project is not seeking contributors', 'This project welcomes contributors, please fork the repository and create pull requests', 'Please contact me directly via email to enquire about contributing',
             ],
         },
         {
@@ -68,6 +70,7 @@ inquirer
             name: 'email',
         },
     ])
+    // Taking the response of the above (data), converting the project title into lowercase and making it into a .md file name
     .then((data) => {
         const filename = `${data.projectTitle.toLowerCase().split(' ').join('')}.md`;
 
@@ -93,7 +96,7 @@ ${data.install}
 
         
 ## <a id="Usage">Usage:</a>
--- How to use this project -- 
+
 ${data.usage}
 
 ## <a id="License">License:</a>
@@ -114,10 +117,8 @@ For any questions, please reach out to me via any of the channels listed below!
 * Github: My username is ${data.githubUser}, avaliable at ${data.githubLink}
 * Email: Alternatively, you can email me at ${data.email}
 
-`;
+`; // Creating the file based on user input, will console log an error if this is not successful. 
         fs.writeFile(filename, markdownContent, (err) =>
             err ? console.log(err) : console.log('Success!')
         );
     });
-
-    //${data.stack.map((language) => `* ${language}`).join('\n')}
