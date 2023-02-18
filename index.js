@@ -87,8 +87,8 @@ ${data.description}
  * [Tests](#Tests)
  * [Questions](#Questions)
         
- ## <a id="Installation:">Installation:</a>
- 
+ ## <a id="Installation">Installation:</a>
+
 ${data.install}
 
         
